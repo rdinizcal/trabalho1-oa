@@ -1,36 +1,10 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 
-/*Estutura que representa 1 setor que contem 512 bytes*/
-typedef struct block {
-	unsigned char bytes_s[512];
-}block;
+#include "estrutura.hpp"
 
-/*Estrutura que representa 1 trilha que contem 60 setores*/
-typedef struct sector_array {
-	block sector[60];
-}sector_array;
-
-/*Estrutura que representa 1 cilindro que contem 5 trilhas*/
-typedef struct track_array {
-	sector_array track[5];
-}track_array;
-
-/*Estrutura que representa o primeiro array indicador de nome 
-do arquivo e indicador do primeiro setor da tabela FAT*/
-typedef struct fatlist_s {
-	char file_name[100];
-	unsigned int first_sector;
-}fatlist;
-
-/*Estrutura que representa uma lista com uma entrada para 
-cada setor do disco rigido*/
-typedef struct fatent_s {
-	unsigned int used;
-	unsigned int eof;
-	unsigned int next;
-}fatent;
-
+void clear();
 void escreverNaMem();
 void lerDaMem();
 void apagarDaMem();
@@ -41,19 +15,21 @@ int main (){
 	int choice=0;
 
 	while(true){
+
+		clear();
+		
 		std::cout<<"**********MENU PRINCIPAL**********"<<std::endl;
-		std::cout<<"1 - Escrever Arquivo"<<std::endl;
-		std::cout<<"2 - Ler Arquivo"<<std::endl;
-		std::cout<<"3 - Apagar Arquivo"<<std::endl;
-		std::cout<<"4 - Mostrar Tabela FAT"<<std::endl;
-		std::cout<<"5 - Sair"<<std::endl;
+		std::cout<<"* 1 - Escrever arquivo           *"<<std::endl;
+		std::cout<<"* 2 - Ler Arquivo                *"<<std::endl;
+		std::cout<<"* 3 - Apagar Arquivo             *"<<std::endl;
+		std::cout<<"* 4 - Mostrar Tabela FAT         *"<<std::endl;
+		std::cout<<"* 5 - Sair                       *"<<std::endl;
 		std::cout<<"**********************************\n"<<std::endl;
 
-		std::cout<<"Escolha um item para continuar: ";
+		std::cout<<"Escolha um item: ";
 		std::cin>>choice;
 
-		if(choice==5) break;
-		if(choice>5 || choice<=0) continue;
+		if(choice>=5 || choice<=0) break;
 			
 		switch(choice){
 			case 1:
@@ -69,17 +45,54 @@ int main (){
 				imprimirFAT();
 				break;
 		}
-
+		break;
 	}
+
 	return 0;
+}
+
+void clear(){
+	std::cout << "\033[2J\033[1;1H";
 }
 
 void escreverNaMem(){
 
+	std::ifstream file;
+
 	std::string fileName;
+	std::string txt = ".txt";
+
+	int pos;
+	char* buffer = new char;
+
+	clear();
 
 	std::cout<<"Nome do arquivo: ";
 	std::cin>>fileName;
+
+	file.open(fileName.append(txt).c_str());
+
+	if(!file.is_open()){
+
+		//Nao funcional...
+		std::cout<<"\nO arquivo "<<fileName<<" nao pode ser aberto."<<std::endl;
+		std::cout<<"Pressione ENTER para continuar...\n";
+		std::cin.clear();
+		std::cin.ignore();
+
+	}else{
+
+		pos=0;
+		for(unsigned char byte; file.read((&byte), sizeof(byte));pos++)
+			buffer[pos] = byte;
+		
+		
+		
+
+	}
+
+	delete[] buffer;
+	file.close();
 }
 
 void lerDaMem(){}
