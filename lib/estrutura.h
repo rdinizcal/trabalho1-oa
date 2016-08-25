@@ -13,7 +13,7 @@ typedef struct track_array {
 	sector_array track[5];
 }track_array;
 
-/*Estrutura que representa o primeiro array indicador de nome 
+/*Estrutura que representa o array indicador de nome 
 do arquivo e indicador do primeiro setor da tabela FAT*/
 typedef struct fatlist_s {
 	char file_name[100];

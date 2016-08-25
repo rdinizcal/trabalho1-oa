@@ -1,8 +1,7 @@
 SRC_PATH=../src
 LIB_PATH=../lib
 OUT_PATH=../
-SOURCES=main.cpp
-INCLUDES=estrutura.hpp
+SOURCES=main.cpp memory.cpp utils.cpp 
 LIST_LIBRARIES=$(addprefix $(LIB_PATH)/,$(INCLUDES))
 LIST_SOURCES=$(addprefix $(SRC_PATH)/,$(SOURCES))
 

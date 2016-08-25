@@ -1,25 +1,20 @@
 #include <iostream>
-#include <string>
-#include <fstream>
 
-#include "../lib/estrutura.hpp"
-
-void clear();
-void escreverNaMem();
-void lerDaMem();
-void apagarDaMem();
-void imprimirFAT();
+#include "../lib/utils.h"
+#include "../lib/memory.h"
+#include "../lib/crtMemory.h"
 
 int main (){
 
 	int choice=0;
+	Memory myMemory;
 
 	while(true){
 
 		clear();
-		
+
 		std::cout<<"**********MENU PRINCIPAL**********"<<std::endl;
-		std::cout<<"* 1 - Escrever arquivo           *"<<std::endl;
+		std::cout<<"* 1 - Escrever Arquivo           *"<<std::endl;
 		std::cout<<"* 2 - Ler Arquivo                *"<<std::endl;
 		std::cout<<"* 3 - Apagar Arquivo             *"<<std::endl;
 		std::cout<<"* 4 - Mostrar Tabela FAT         *"<<std::endl;
@@ -29,71 +24,27 @@ int main (){
 		std::cout<<"Escolha um item: ";
 		std::cin>>choice;
 
-		if(choice>=5 || choice<=0) break;
+		if(choice>5 || choice<=0) return 0;
 			
 		switch(choice){
 			case 1:
-				escreverNaMem();
+				writeMemory(myMemory);
 				break;
 			case 2:
-				lerDaMem();
+				readMemory(myMemory);
 				break;
 			case 3:
-				apagarDaMem();
+				eraseMemory(myMemory);
 				break;
 			case 4:
-				imprimirFAT();
+				memory.showFAT();
 				break;
+			case 5:
+				return 0;
 		}
-		break;
+
+		std::cin.ignore();
 	}
 
 	return 0;
 }
-
-void clear(){
-	std::cout << "\033[2J\033[1;1H";
-}
-
-void escreverNaMem(){
-
-	/*std::ifstream file;
-
-	std::string fileName;
-	std::string txt = ".txt";
-
-	int pos;
-	char* buffer = new char;
-
-	clear();
-
-	std::cout<<"Nome do arquivo: ";
-	std::cin>>fileName;
-
-	file.open(fileName.append(txt).c_str());
-
-	if(!file.is_open()){
-
-		//Nao funcional...
-		std::cout<<"\nO arquivo "<<fileName<<" nao pode ser aberto."<<std::endl;
-		std::cout<<"Pressione ENTER para continuar...\n";
-		std::cin.clear();
-		std::cin.ignore();
-
-	}else{
-
-		pos=0;
-		for(unsigned char byte; file.read((&byte), sizeof(byte));pos++)
-			buffer[pos] = byte;
-		
-	}
-
-	delete[] buffer;
-	file.close();*/
-}
-
-void lerDaMem(){}
-
-void apagarDaMem(){}
-
-void imprimirFAT(){}
