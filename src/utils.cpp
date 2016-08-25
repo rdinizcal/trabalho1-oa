@@ -5,7 +5,7 @@
 
 /**************************CONSTRUTOR**************************/
 Utils::Utils(){
-	std::cout<<"Objeto de utils criado."<<std::endl;
+	//std::cout<<"Objeto de utils criado."<<std::endl;
 }
 
 /**************************METODOS PUBLICOS**************************/

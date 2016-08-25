@@ -29,8 +29,6 @@ int main (){
 		std::cin>>choice;
 
 		if(choice>5 || choice<=0) return 0;
-		
-		;
 
 		switch(choice){
 			case 1:
@@ -49,8 +47,8 @@ int main (){
 				return 0;
 		}
 
-		std::cin.ignore();
 	}
+
 
 	return 0;
 }

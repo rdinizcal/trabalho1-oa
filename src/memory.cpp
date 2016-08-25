@@ -28,6 +28,8 @@ Memory::~Memory(){
 /**************************METODOS PUBLICOS**************************/
 void Memory::insertMemory(unsigned char* buffer, int cluster){
 
+	std::cout<<"TEST"<<std::endl;
+	
 	int pos = Memory::findEmptyCluster(0,0);
 
 	if(pos==-1){
@@ -35,6 +37,7 @@ void Memory::insertMemory(unsigned char* buffer, int cluster){
 		std::cout<<"O disco esta cheio."<<std::endl;
 		return;
 	}
+
 
 	std::cout<<pos<<std::endl;
 

@@ -6,7 +6,7 @@ LIST_LIBRARIES=$(addprefix $(LIB_PATH)/,$(INCLUDES))
 LIST_SOURCES=$(addprefix $(SRC_PATH)/,$(SOURCES))
 
 CC=g++
-CFLAGS=-ansi -Wall -std=c++0x
+CFLAGS=-g -ansi -Wall -std=c++0x
 
 all:
 	mkdir -p $(OUT_PATH)

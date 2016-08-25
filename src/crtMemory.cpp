@@ -8,7 +8,7 @@
 
 /**************************CONSTRUTOR**************************/
 CrtMemory::CrtMemory(){
-	std::cout<<"Objeto de crtMemory criado."<<std::endl;
+	//std::cout<<"Objeto de crtMemory criado."<<std::endl;
 }
 
 /**************************METODOS PUBLICOS**************************/
@@ -21,6 +21,8 @@ void CrtMemory::writeMemory(Memory memory){
 	std::string fileName;
 	std::string filePath;
 	std::string txt = ".txt";
+
+	bool inserted;
 
 	int bytes,sectors,clusters;
 
@@ -37,11 +39,7 @@ void CrtMemory::writeMemory(Memory memory){
 
 	if(!file.is_open()){
 
-		//Nao funcional...
-		std::cout<<"\nO arquivo "<<fileName<<" nao pode ser aberto."<<std::endl;
-		std::cout<<"Pressione ENTER para continuar...\n";
-		std::cin.clear();
-		std::cin.ignore();
+
 
 	}else{
 
@@ -50,16 +48,23 @@ void CrtMemory::writeMemory(Memory memory){
 		clusters=0;
 		while(!file.eof()){
 
-			file.read((char*)&buffer[bytes++], sizeof(unsigned char));
+			file.read((char*)&buffer[bytes], sizeof(unsigned char));
 
+			std::cout<<"("<<buffer[bytes]<<")";
+
+			bytes++;
 			if(bytes%512==0) 
 				sectors++;
 
-			if(sectors==4) 
+			inserted=false;
+			if(sectors==4){ 
 				memory.insertMemory(buffer, clusters++);
+				inserted=true;
+			}
 
 		}
-		
+		if(!inserted)
+			memory.insertMemory(buffer, clusters++);
 
 	}
 
