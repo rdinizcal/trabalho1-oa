@@ -1,7 +1,7 @@
 SRC_PATH=../src
 LIB_PATH=../lib
 OUT_PATH=../
-SOURCES=main.cpp memory.cpp utils.cpp 
+SOURCES=main.cpp memory.cpp crtMemory.cpp utils.cpp 
 LIST_LIBRARIES=$(addprefix $(LIB_PATH)/,$(INCLUDES))
 LIST_SOURCES=$(addprefix $(SRC_PATH)/,$(SOURCES))
 
