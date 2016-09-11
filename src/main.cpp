@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 
 #include "../lib/utils.h"
 #include "../lib/memory.h"
@@ -7,10 +8,11 @@
 int main (){
 
 	int choice=0;
-	Memory myMemory;
+	Memory *myMemory = new Memory;
 
 	while(true){
 
+		std::cout<<"Does it even get here?"<<std::endl;
 		Utils util;
 		CrtMemory memoryController;
 
@@ -33,6 +35,7 @@ int main (){
 		switch(choice){
 			case 1:
 				memoryController.writeMemory(myMemory);
+				std::cout<<"Back to main"<<std::endl;
 				break;
 			case 2:
 				memoryController.readMemory(myMemory);
@@ -41,7 +44,7 @@ int main (){
 				memoryController.eraseMemory(myMemory);
 				break;
 			case 4:
-				myMemory.showFAT();
+				myMemory->showFAT();
 				break;
 			case 5:
 				return 0;
@@ -49,6 +52,10 @@ int main (){
 
 	}
 
-
+	delete[] myMemory;	/*
+	std::cout << "Press enter to continue . . . ";
+	std::cin.sync();
+	std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	*/
 	return 0;
 }

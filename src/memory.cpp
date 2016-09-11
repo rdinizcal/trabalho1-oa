@@ -5,12 +5,13 @@
 #define MAXCYLINDER 10
 #define MAXSECTOR 3000
 
-
 /**************************CONSTRUTOR**************************/
 Memory::Memory(){
 	cylinder = new track_array[MAXCYLINDER];
-	fat_id = new fatlist;
+	fat_id = new fatlist[MAXSECTOR];
 	sector_ent = new fatent[MAXSECTOR];
+
+	fileIndex=0;
 
 	std::cout<<"Objeto de memoria criado."<<std::endl;
 }
@@ -26,21 +27,24 @@ Memory::~Memory(){
 
 
 /**************************METODOS PUBLICOS**************************/
-void Memory::insertMemory(unsigned char* buffer, int cluster){
+void Memory::insertMemory(unsigned char buffer[], sector_map map){
 
-	std::cout<<"TEST"<<std::endl;
-	
-	int pos = Memory::findEmptyCluster(0,0);
 
-	if(pos==-1){
-		std::cout<<"ERRO: Não foi possivel inserir o registro na memoria - ";
-		std::cout<<"O disco esta cheio."<<std::endl;
-		return;
+	std::cout<<"Inserindo cluster na memoria..."<<std::endl;
+
+	/*for(int i=0; i<2048; i++) std::cout<<buffer[i];
+
+	std::cout<<std::endl<<"Done printing buffer.."<<std::endl;
+	*/
+
+
+	std::cout<<"Cylinder: "<<map.cylinder<<" Track: "<<map.track<<" Sector: "<<map.sector<<std::endl;
+
+	for(int i=0; i<4; i++){
+		for(int j=0; j<512; j++){
+			cylinder[map.cylinder].track[map.track].sector[map.sector].bytes_s[j] = buffer[j+(512*i)];
+		}
 	}
-
-
-	std::cout<<pos<<std::endl;
-
 
 }
 
@@ -56,17 +60,28 @@ void Memory::showFAT(){
 
 }
 
+void Memory::printAttribute(){
+
+	std::cout<<"Printing fatent"<<std::endl;
+	for(int i=0; i<3000; i++){
+		std::cout<<i<<"- used: "<<sector_ent[i].used<<" eof: "<<sector_ent[i].eof<<" next: "<<sector_ent[i].next<<std::endl;
+	}
+	
+}
+
 /**************************SETTERS & GETTERS**************************/
-track_array* Memory::getCylinder(){
-	return cylinder;
+void Memory::setFat_id(fatlist id){
+	fat_id[fileIndex++]=id;
 }
 
-/**************************METODOS PRIVADOS**************************/
-int Memory::findEmptyCluster(int pos, int emptyCounter){
-
-	if(pos>MAXSECTOR) return-1;
-	if(emptyCounter==3) return pos-3;
-
-	return (sector_ent[pos].used==0?Memory::findEmptyCluster(pos+1,emptyCounter+1):Memory::findEmptyCluster(pos+1,0));
+fatlist Memory::getFat_id(){
+	return fat_id[fileIndex];
 }
 
+void Memory::setSector_ent(fatent sec_ent, int pos){
+	sector_ent[pos]=sec_ent;
+}
+
+fatent Memory::getSector_ent(int pos){
+	return sector_ent[pos];
+}

@@ -31,4 +31,12 @@ typedef struct fatent_s {
 	unsigned int next;
 }fatent;
 
+typedef struct sector_map {
+	int fat_pos;
+	int sector;
+	int track;
+	int cylinder;
+	bool found;
+}sector_map;
+
 #endif

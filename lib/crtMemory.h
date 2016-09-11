@@ -8,9 +8,14 @@ class CrtMemory{
 public:
 	CrtMemory();
 
-	void writeMemory(Memory memory);
-	void readMemory(Memory memory);
-	void eraseMemory(Memory memory);
+	void writeMemory(Memory*);
+	void readMemory(Memory*);
+	void eraseMemory(Memory*);
+
+private:
+	void voidMethodTest(Memory*);
+	sector_map findEmptyCluster(Memory*);
+	sector_map findNextEmptyCluster(Memory*,sector_map);
 };
 
 #endif
