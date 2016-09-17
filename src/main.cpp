@@ -53,6 +53,9 @@ int main (){
 				return 0;
 		}
 
+		std::cout<<"\nPressione ENTER para continuar..."<<std::endl;
+		std::getchar();
+		std::getchar();
 	}
 
 	delete[] myMemory;	/*

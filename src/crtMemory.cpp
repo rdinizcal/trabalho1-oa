@@ -178,9 +178,6 @@ bool CrtMemory::writeMemory(int files, Memory* memory){
 	std::cout<<"O arquivo "<<fileName<<" foi inserido com sucesso!"<<std::endl;
 	std::cout<<"A operacao de insercao durou "<<4*avg_seek+1*min_seek+6*lat+12*transfer<<"ms."<<std::endl;
 	
-	std::cout<<"\nPressione ENTER para continuar..."<<std::endl;
-	std::getchar();
-	std::getchar();
 	return true;
 }
 
@@ -255,9 +252,6 @@ bool CrtMemory::readMemory(int files, Memory* memory){
 	std::cout<<"O arquivo "<<fileName<<" foi lido com sucesso!"<<std::endl;
 	std::cout<<"A operacao de leitura durou "<<4*avg_seek+1*min_seek+6*lat+12*transfer<<"ms."<<std::endl;
 	
-	std::cout<<"\nPressione ENTER para continuar..."<<std::endl;
-	std::getchar();
-	std::getchar();
 	return true;
 }
 
@@ -289,9 +283,6 @@ bool CrtMemory::eraseMemory(int files, Memory* memory){
 	
 	std::cout<<"O arquivo "<<fileName<<" foi removido com sucesso!"<<std::endl;
 	
-	std::cout<<"\nPressione ENTER para continuar..."<<std::endl;
-	std::getchar();
-	std::getchar();
 	return true;
 }
 
@@ -335,10 +326,7 @@ void CrtMemory::showFAT(int files, Memory* memory){
 			else std::cout<<std::endl;
 		}
 	}
-
-	std::cout<<"\nPressione ENTER para continuar..."<<std::endl;
-	std::getchar();
-	std::getchar();
+	
 }
 
 
