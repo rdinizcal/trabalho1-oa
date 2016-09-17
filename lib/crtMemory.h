@@ -3,17 +3,31 @@
 
 #include "memory.h"
 
+#include <iostream>
+#include <fstream>
+#include <string>
+
 class CrtMemory{
+
+private:
+	int avg_seek;
+	int min_seek;
+	int lat;
+	int transfer;
 
 public:
 	CrtMemory();
 
-	void writeMemory(Memory*);
-	void readMemory(Memory*);
-	void eraseMemory(Memory*);
+	bool writeMemory(int, Memory*);
+	bool readMemory(int,Memory*);
+	bool eraseMemory(int, Memory*);
+	void showFAT(int,Memory*);
 
 private:
-	void voidMethodTest(Memory*);
+	int mapToPos(sector_map);
+	sector_map posToMap(int pos);
+	unsigned int findFirstSector(int, std::string, Memory*);
+	bool fileExists(int, std::string, Memory*);
 	sector_map findEmptyCluster(Memory*);
 	sector_map findNextEmptyCluster(Memory*,sector_map);
 };

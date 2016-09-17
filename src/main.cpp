@@ -9,12 +9,14 @@ int main (){
 
 	int choice=0;
 	Memory *myMemory = new Memory;
+	int files=0;
+	bool success=false;
 
 	while(true){
 
-		std::cout<<"Does it even get here?"<<std::endl;
 		Utils util;
 		CrtMemory memoryController;
+		
 
 		util.clear();
 
@@ -34,17 +36,18 @@ int main (){
 
 		switch(choice){
 			case 1:
-				memoryController.writeMemory(myMemory);
-				std::cout<<"Back to main"<<std::endl;
+				success=memoryController.writeMemory(files,myMemory);
+				if(success) files++;
 				break;
 			case 2:
-				memoryController.readMemory(myMemory);
+				success=memoryController.readMemory(files,myMemory);
 				break;
 			case 3:
-				memoryController.eraseMemory(myMemory);
+				success=memoryController.eraseMemory(files,myMemory);
+				if(success) files--;
 				break;
 			case 4:
-				myMemory->showFAT();
+				memoryController.showFAT(files,myMemory);
 				break;
 			case 5:
 				return 0;

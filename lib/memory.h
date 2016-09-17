@@ -3,6 +3,9 @@
 
 #include "../lib/estrutura.h"
 
+#include <string>
+#include <iostream>
+
 class Memory{
 private:
 	track_array* cylinder;
@@ -15,17 +18,13 @@ public:
 	Memory();
 	~Memory();
 	void insertMemory(unsigned char*,sector_map);
-	void selectMemory();
-	void deleteMemory();
-	void showFAT();
+	void selectMemory(unsigned char*,sector_map);
+	void deleteMemory(std::string, int);
 
-
-	void setFat_id(fatlist id);
-	fatlist getFat_id();
-	void setSector_ent(fatent sec_ent, int pos);
-	fatent getSector_ent(int pos);
-
-	void printAttribute();
+	void setFat_id(fatlist);
+	fatlist getFat_id(int);
+	void setSector_ent(fatent, int);
+	fatent getSector_ent(int);
 	
 };
 
