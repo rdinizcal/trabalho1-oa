@@ -102,6 +102,7 @@ bool CrtMemory::writeMemory(int files, Memory* memory){
 					insertedSectors[i+(clusters*4)]=map.fat_pos+i;
 				}
 				memory->insertMemory(buffer, map);
+				transfer+=4;
 				//std::cout<<"Cluster "<<clusters+1<<" inserido!"<<std::endl;
 				clusters++;
 				inserted=true;
@@ -109,14 +110,17 @@ bool CrtMemory::writeMemory(int files, Memory* memory){
 			}
 
 		}
-		//std::cout<<"Sectors to insert: "<<sectors<<std::endl; 
-		if(sectors!=0){
+		std::cout<<"Bytes to insert: "<<2048-bytes<<std::endl; 
+		if(sectors!=0 || bytes>0){
 
-			for(int i=sectors; i<4; i++){
+			for(int i=bytes-1; i<2048; i++)
+				buffer[i]=0x0;
+
+			/*for(int i=sectors; i<4; i++){
 				for(int j=0; j<512; j++){
 					buffer[j+(512*i)]=0x0;
 				}
-			}
+			}*/
 
 			if(!inserted){
 				map=findEmptyCluster(memory);
@@ -147,6 +151,7 @@ bool CrtMemory::writeMemory(int files, Memory* memory){
 				insertedSectors[i+(clusters*4)]=map.fat_pos+i;
 			}
 			memory->insertMemory(buffer, map);
+			transfer+=4;
 			//std::cout<<"Cluster "<<clusters+1<<" inserido!"<<std::endl;
 			clusters++;
 			inserted=true;
@@ -176,7 +181,7 @@ bool CrtMemory::writeMemory(int files, Memory* memory){
 	file.close();
 
 	std::cout<<"O arquivo "<<fileName<<" foi inserido com sucesso!"<<std::endl;
-	std::cout<<"A operacao de insercao durou "<<4*avg_seek+1*min_seek+6*lat+12*transfer<<"ms."<<std::endl;
+	std::cout<<"A operacao de insercao durou "<<4*avg_seek+1*min_seek+6*lat+0.2*transfer<<"ms."<<std::endl;
 	
 	return true;
 }
@@ -238,7 +243,8 @@ bool CrtMemory::readMemory(int files, Memory* memory){
 			memory->selectMemory(buffer, map);
 
 			for(int k=0; k<2048; k++)
-				file<<buffer[k];
+				if(buffer[k]!='\00') file<<buffer[k];
+			
 		}
 
 	}else{
@@ -250,7 +256,7 @@ bool CrtMemory::readMemory(int files, Memory* memory){
 	file.close();
 
 	std::cout<<"O arquivo "<<fileName<<" foi lido com sucesso!"<<std::endl;
-	std::cout<<"A operacao de leitura durou "<<4*avg_seek+1*min_seek+6*lat+12*transfer<<"ms."<<std::endl;
+	std::cout<<"A operacao de leitura durou "<<4*avg_seek+1*min_seek+6*lat+0.2*transfer<<"ms."<<std::endl;
 	
 	return true;
 }
@@ -326,7 +332,6 @@ void CrtMemory::showFAT(int files, Memory* memory){
 			else std::cout<<std::endl;
 		}
 	}
-	
 }
 
 
@@ -383,8 +388,6 @@ sector_map CrtMemory::findEmptyCluster(Memory* memory){
 	sector_map map;
 	int emptySectorCounter=0;
 	int pos=0;
-
-	
 
 	for(int tracks=0; tracks<5; tracks++){
 		//std::cout<<"Track: "<<tracks<<std::endl;
